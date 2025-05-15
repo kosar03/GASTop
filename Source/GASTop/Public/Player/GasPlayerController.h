@@ -16,12 +16,25 @@ class GASTOP_API AGasPlayerController : public APlayerController
 	
 public:
 	AGasPlayerController();
+
+	virtual void PlayerTick(float DeltaTime) override;
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void SetupInputComponent() override;
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<class UInputMappingContext> GasContext;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<class UInputAction> MoveAction;
+
+	void Move(const struct FInputActionValue& InputActionValue);
+
+	void CursorTrace();
+
+	TObjectPtr<class IEnemyInterface> LastActor, NowActor;
 };

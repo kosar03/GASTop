@@ -3,29 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "GameFramework/PlayerState.h"
 #include "AbilitySystemInterface.h"
-#include "GasCharacterBase.generated.h"
+#include "GasPlayerState.generated.h"
 
-UCLASS(Abstract)
-class GASTOP_API AGasCharacterBase : public ACharacter, public IAbilitySystemInterface
+/**
+ * 
+ */
+UCLASS()
+class GASTOP_API AGasPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	AGasCharacterBase();
+	AGasPlayerState();
 
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 	class UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	UPROPERTY(EditAnywhere, Category = "Weapon")
-	TObjectPtr<USkeletalMeshComponent> Weapon;
-
 	UPROPERTY()
 	TObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
