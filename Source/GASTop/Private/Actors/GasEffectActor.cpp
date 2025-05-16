@@ -41,7 +41,8 @@ void AGasEffectActor::OnBeginOverlapFunc(UPrimitiveComponent *OverlappedComponen
 		const UGasAttributeSet* AttributeSet = Cast<UGasAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UGasAttributeSet::StaticClass()));
 
 		UGasAttributeSet* MutableAttributeSet = const_cast<UGasAttributeSet*>(AttributeSet);
-		MutableAttributeSet->SetHealth(MutableAttributeSet->GetHealth() + 10.0f);
+		MutableAttributeSet->SetHealth(MutableAttributeSet->GetHealth() + 25.0f);
+		MutableAttributeSet->SetMana(MutableAttributeSet->GetMana() - 25.0f);
 		Destroy();
 	}
 }

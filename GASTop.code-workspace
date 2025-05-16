@@ -11,7 +11,13 @@
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
-		"npm.autoDetect": "off"
+		"npm.autoDetect": "off",
+		"files.associations": {
+			"*.cjson": "jsonc",
+			"*.wxss": "css",
+			"*.wxs": "javascript",
+			"*.inc": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
