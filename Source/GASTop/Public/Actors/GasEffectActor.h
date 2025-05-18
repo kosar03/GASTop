@@ -66,7 +66,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
-	// 活跃的Infinite GE
+	// 活跃的Infinite GEs
 	TMap<FActiveGameplayEffectHandle, class UAbilitySystemComponent*> ActiveEffectHandles;  
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")

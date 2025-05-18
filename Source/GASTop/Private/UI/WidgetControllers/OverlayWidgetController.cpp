@@ -3,7 +3,7 @@
 
 #include "UI/WidgetControllers/OverlayWidgetController.h"
 #include "AbilitySystem/GasAttributeSet.h"
-
+#include "AbilitySystem/GasAbilitySystemComponent.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -25,6 +25,24 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
     AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GasAttributeSet->GetManaAttribute()).AddUObject(this, &UOverlayWidgetController::ManaChanged);
     AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(GasAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
+    Cast<UGasAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+        [this](const FGameplayTagContainer& AssetTags) -> void
+        {
+            for (const FGameplayTag& Tag : AssetTags)
+            {
+                // "A.1".MatchesTag("A") == true, "A".MatchesTag("A") == false.
+                FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+                bool bIsMessageTag = Tag.MatchesTag(MessageTag); 
+                if (bIsMessageTag)
+                {
+                    const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+                    MessageWidgetRow.Broadcast(*Row);
+
+                }
+            }   
+        }
+    );
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData &Data) const

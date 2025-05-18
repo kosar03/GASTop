@@ -38,8 +38,15 @@ void AGasEnemy::BeginPlay()
 {
     Super::BeginPlay();
 
+    InitAbilityActorInfo();
+}
+
+void AGasEnemy::InitAbilityActorInfo()
+{
     if (AbilitySystemComponent)
     {
         AbilitySystemComponent->InitAbilityActorInfo(this, this);
+        Cast<UGasAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet(); 
     }
+
 }

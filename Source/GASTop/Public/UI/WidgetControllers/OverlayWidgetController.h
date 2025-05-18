@@ -4,13 +4,33 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetControllers/GasWidgetController.h"
+#include "GameplayTagContainer.h"
+#include "Engine/DataTable.h"
 #include "OverlayWidgetController.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, NewMaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, NewMaxMana);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
+
+
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText Message = FText();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<class UGasUserWidget> MessageWidgetClass;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
 
 /**
@@ -27,20 +47,35 @@ public:
 
 
 	UPROPERTY(BlueprintAssignable, category = "GAS|Attributes")
-	FOnHealthChangedSignature OnHealthChanged;
+	FOnAttributeChangedSignature OnHealthChanged;
 	UPROPERTY(BlueprintAssignable, category = "GAS|Attributes")
-	FOnMaxHealthChangedSignature OnMaxHealthChanged;
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, category = "GAS|Attributes")
-	FOnManaChangedSignature OnManaChanged;
+	FOnAttributeChangedSignature OnManaChanged;
 	UPROPERTY(BlueprintAssignable, category = "GAS|Attributes")
-	FOnMaxManaChangedSignature OnMaxManaChanged;
+	FOnAttributeChangedSignature OnMaxManaChanged;
+
+	UPROPERTY(BlueprintAssignable, category = "GAS|Messages")
+	FMessageWidgetRowSignature MessageWidgetRow;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wifget Data")
+	TObjectPtr<class UDataTable> MessageWidgetDataTable;
 
 	void HealthChanged(const struct FOnAttributeChangeData& Data) const;
 	void MaxHealthChanged(const struct FOnAttributeChangeData& Data) const;
 
 	void ManaChanged(const struct FOnAttributeChangeData& Data) const;
 	void MaxManaChanged(const struct FOnAttributeChangeData& Data) const;
+
+	template<typename T>
+	T* GetDataTableRowByTag(class UDataTable* DataTable, const FGameplayTag& Tag);
 };
+
+template <typename T>
+inline T *UOverlayWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag &Tag)
+{
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+	
+}

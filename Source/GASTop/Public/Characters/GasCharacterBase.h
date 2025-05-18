@@ -22,6 +22,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo();
 
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TObjectPtr<USkeletalMeshComponent> Weapon;

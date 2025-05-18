@@ -53,6 +53,7 @@ void AGasCharacter::InitAbilityActorInfo()
 
     AbilitySystemComponent = GasPlayerState->GetAbilitySystemComponent();
     AbilitySystemComponent->InitAbilityActorInfo(GasPlayerState, this);
+    Cast<UGasAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
     AttributeSet = GasPlayerState->GetAttributeSet();
 
     AGasPlayerController* GasPlayerController = Cast<AGasPlayerController>(GetController());

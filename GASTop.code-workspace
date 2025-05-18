@@ -16,7 +16,11 @@
 			"*.cjson": "jsonc",
 			"*.wxss": "css",
 			"*.wxs": "javascript",
-			"*.inc": "cpp"
+			"*.inc": "cpp",
+			"__locale": "cpp",
+			"system_error": "cpp",
+			"xlocale": "cpp",
+			"fft": "cpp"
 		}
 	},
 	"extensions": {

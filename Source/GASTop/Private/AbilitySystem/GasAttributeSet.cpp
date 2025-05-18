@@ -38,22 +38,18 @@ void UGasAttributeSet::PreAttributeChange(const FGameplayAttribute &Attribute, f
     if (Attribute == GetHealthAttribute())
     {
         NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-
     }
     if (Attribute == GetMaxHealthAttribute())
     {
         NewValue = FMath::Max(0.f, NewValue);
-
     }
     if (Attribute == GetManaAttribute())
     {
         NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
-
     }
     if (Attribute == GetMaxManaAttribute())
     {
         NewValue = FMath::Max(0.f, NewValue);
-
     }
 
 
@@ -99,6 +95,16 @@ void UGasAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
     
     FEffectProperties Props;
     SetEffectProperties(Data, Props);
+
+    if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+    {
+        SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
+    }
+    if (Data.EvaluatedData.Attribute == GetManaAttribute())
+    {
+        SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxHealth()));
+    }
+
 }
 
 void UGasAttributeSet::OnRep_Health(const FGameplayAttributeData &OldHealth) const
