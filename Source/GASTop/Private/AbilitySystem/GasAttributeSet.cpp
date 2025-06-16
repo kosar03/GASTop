@@ -20,6 +20,16 @@ UGasAttributeSet::UGasAttributeSet( )
 void UGasAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    
+    // Replicate the Strength attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Strength, COND_None, REPNOTIFY_Always);
+    // Replicate the Intelligence attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
+    // Replicate the Vigor attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
+    // Replicate the Resilience attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+
 
     // Replicate the Health attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Health, COND_None, REPNOTIFY_Always);
@@ -29,6 +39,7 @@ void UGasAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Mana, COND_None, REPNOTIFY_Always);
     // Replicate the MaxMana attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+
 }
 
 void UGasAttributeSet::PreAttributeChange(const FGameplayAttribute &Attribute, float& NewValue)
@@ -105,6 +116,26 @@ void UGasAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
         SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxHealth()));
     }
 
+}
+
+void UGasAttributeSet::OnRep_Strength(const FGameplayAttributeData &OldStrength) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Strength, OldStrength);
+}
+
+void UGasAttributeSet::OnRep_Intelligence(const FGameplayAttributeData &OldIntelligence) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Intelligence, OldIntelligence);
+}
+
+void UGasAttributeSet::OnRep_Vigor(const FGameplayAttributeData &OldVigor) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Vigor, OldVigor);
+}
+
+void UGasAttributeSet::OnRep_Resilience(const FGameplayAttributeData &OldResilience) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Resilience, OldResilience);
 }
 
 void UGasAttributeSet::OnRep_Health(const FGameplayAttributeData &OldHealth) const

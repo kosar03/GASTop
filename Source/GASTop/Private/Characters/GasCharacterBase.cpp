@@ -2,6 +2,7 @@
 
 
 #include "Characters/GasCharacterBase.h"
+#include "AbilitySystemComponent.h"
 
 // Sets default values
 AGasCharacterBase::AGasCharacterBase()
@@ -29,3 +30,11 @@ void AGasCharacterBase::InitAbilityActorInfo()
 	
 }
 
+void AGasCharacterBase::InitializePrimaryAttributes() const
+{
+	check(DefaultPrimaryAttributes);
+	check(IsValid(GetAbilitySystemComponent()));
+	const FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.f, ContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
+}

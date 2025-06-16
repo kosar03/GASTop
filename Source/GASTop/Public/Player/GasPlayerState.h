@@ -22,7 +22,7 @@ public:
 	class UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
 	TObjectPtr<class UAttributeSet> AttributeSet;

@@ -31,7 +31,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
         {
             for (const FGameplayTag& Tag : AssetTags)
             {
-                // "A.1".MatchesTag("A") == true, "A".MatchesTag("A") == false.
+                // "A.1".MatchesTag("A") == true, "A".MatchesTag("A.1") == false.
                 FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
                 bool bIsMessageTag = Tag.MatchesTag(MessageTag); 
                 if (bIsMessageTag)
