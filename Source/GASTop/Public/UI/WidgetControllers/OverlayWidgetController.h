@@ -60,7 +60,7 @@ public:
 	FMessageWidgetRowSignature MessageWidgetRow;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wifget Data")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<class UDataTable> MessageWidgetDataTable;
 
 	void HealthChanged(const struct FOnAttributeChangeData& Data) const;

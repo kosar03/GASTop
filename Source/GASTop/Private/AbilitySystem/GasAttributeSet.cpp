@@ -11,9 +11,7 @@
 UGasAttributeSet::UGasAttributeSet( )
 {
     InitHealth(50.f);
-    InitMaxHealth(100.f);
     InitMana(50.f);
-    InitMaxMana(100.f);
 
 }
 
@@ -21,6 +19,9 @@ void UGasAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
+    /**
+     * Primary Attributes
+     */
     // Replicate the Strength attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Strength, COND_None, REPNOTIFY_Always);
     // Replicate the Intelligence attribute
@@ -30,11 +31,33 @@ void UGasAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     // Replicate the Resilience attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
 
-
+    /**
+     * Secondary Attributes
+     */
+    // Replicate the Armor attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Armor, COND_None, REPNOTIFY_Always);
+    // Replicate the ArmorPenetration attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
+    // Replicate the BlockChance attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+    // Replicate the CriticalHitChance attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, CriticalHitChance, COND_None, REPNOTIFY_Always);
+    // Replicate the CriticalHitDamage attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
+    // Replicate the CriticalHitResistance attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
+    // Replicate the HealthRegeneration attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
+    // Replicate the ManaRegeneration attribute
+    DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
     // Replicate the Health attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Health, COND_None, REPNOTIFY_Always);
     // Replicate the MaxHealth attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+
+    /**
+     * Vital Attributes
+     */
     // Replicate the Mana attribute
     DOREPLIFETIME_CONDITION_NOTIFY(UGasAttributeSet, Mana, COND_None, REPNOTIFY_Always);
     // Replicate the MaxMana attribute
@@ -138,9 +161,44 @@ void UGasAttributeSet::OnRep_Resilience(const FGameplayAttributeData &OldResilie
     GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Resilience, OldResilience);
 }
 
-void UGasAttributeSet::OnRep_Health(const FGameplayAttributeData &OldHealth) const
+void UGasAttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData &OldManaRegeneration) const
 {
-    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Health, OldHealth);
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, ManaRegeneration, OldManaRegeneration);
+}
+
+void UGasAttributeSet::OnRep_Armor(const FGameplayAttributeData &OldArmor) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Armor, OldArmor);
+}
+
+void UGasAttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData &OldArmorPenetration) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, ArmorPenetration, OldArmorPenetration);
+}
+
+void UGasAttributeSet::OnRep_BlockChance(const FGameplayAttributeData & OldBlockChance) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, BlockChance, OldBlockChance);
+}
+
+void UGasAttributeSet::OnRep_CriticalHitChance(const FGameplayAttributeData &OldCriticalHitChance) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, CriticalHitChance, OldCriticalHitChance);
+}
+
+void UGasAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData &OldCriticalHitResistance) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, CriticalHitResistance, OldCriticalHitResistance);
+}
+
+void UGasAttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData &OldHealthRegeneration) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, HealthRegeneration, OldHealthRegeneration);
+}
+
+void UGasAttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData &OldCriticalHitDamage) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, CriticalHitDamage, OldCriticalHitDamage);
 }
 
 void UGasAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData &OldMaxHealth) const
@@ -148,14 +206,18 @@ void UGasAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData &OldMaxHealt
     GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, MaxHealth, OldMaxHealth);
 }
 
-void UGasAttributeSet::OnRep_Mana(const FGameplayAttributeData &OldMana) const
-{
-    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Mana, OldMana);
-}
-
 void UGasAttributeSet::OnRep_MaxMana(const FGameplayAttributeData &OldMaxMana) const
 {
     GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, MaxMana, OldMaxMana);
 }
 
+void UGasAttributeSet::OnRep_Health(const FGameplayAttributeData &OldHealth) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Health, OldHealth);
+}
+
+void UGasAttributeSet::OnRep_Mana(const FGameplayAttributeData &OldMana) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(UGasAttributeSet, Mana, OldMana);
+}
 
