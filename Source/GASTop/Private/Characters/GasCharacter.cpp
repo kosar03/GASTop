@@ -46,6 +46,15 @@ void AGasCharacter::OnRep_PlayerState()
     InitAbilityActorInfo();
 }
 
+int32 AGasCharacter::GetPlayerLevel()
+{
+    const AGasPlayerState* GasPlayerState = GetPlayerState<AGasPlayerState>();
+    
+    check(GasPlayerState);
+    return GasPlayerState->GetPlayerLevel();
+
+}
+
 void AGasCharacter::InitAbilityActorInfo()
 {
     AGasPlayerState* GasPlayerState = GetPlayerState<AGasPlayerState>();

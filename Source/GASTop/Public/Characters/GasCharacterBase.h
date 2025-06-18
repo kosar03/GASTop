@@ -5,10 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interfaces/CombatInterface.h"
 #include "GasCharacterBase.generated.h"
 
+
+
 UCLASS(Abstract)
-class GASTOP_API AGasCharacterBase : public ACharacter, public IAbilitySystemInterface
+class GASTOP_API AGasCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -32,11 +35,14 @@ protected:
 	UPROPERTY()
 	TObjectPtr<class UAttributeSet> AttributeSet;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TSubclassOf<class UGameplayEffect> DefaultPrimaryAttributes;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TSubclassOf<class UGameplayEffect> DefaultSecondaryAttributes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	TSubclassOf<class UGameplayEffect> DefaultVitalAttributes;
 
 	void ApplyEffectToSelf(TSubclassOf<class UGameplayEffect> GameplayEffectClass, float Level) const;
 	void InitialDefaultAttributes() const;

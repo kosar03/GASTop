@@ -17,13 +17,23 @@ class GASTOP_API AGasPlayerState : public APlayerState, public IAbilitySystemInt
 
 public:
 	AGasPlayerState();
-
+	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 	class UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
+	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 
 protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
 	TObjectPtr<class UAttributeSet> AttributeSet;
+
+private:
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
+	int32 Level = 1;
+	
+	UFUNCTION()
+	void OnRep_Level(int32 OldLevel);
 };
